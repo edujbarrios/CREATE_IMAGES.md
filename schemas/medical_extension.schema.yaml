@@ -1,0 +1,73 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "https://example.org/create-images/schemas/medical_extension.schema.yaml"
+title: "Create_images Medical Imaging Extension"
+type: object
+required:
+  - medical_extension
+properties:
+  medical_extension:
+    type: object
+    required:
+      - enabled
+      - synthetic_only
+      - non_diagnostic
+      - modality
+      - clinical_constraints
+      - validation
+    properties:
+      enabled:
+        const: true
+      synthetic_only:
+        const: true
+      non_diagnostic:
+        const: true
+      modality:
+        enum:
+          - xray
+          - ct
+          - mri
+          - ultrasound
+          - oct
+          - histopathology
+          - pet
+          - dermoscopy
+          - endoscopy
+      body_region:
+        type: string
+      anatomy: {}
+      anatomical_plane:
+        type:
+          - string
+          - "null"
+      projection_or_view:
+        type:
+          - string
+          - "null"
+      laterality:
+        type:
+          - string
+          - "null"
+      pathology:
+        type: object
+        additionalProperties: true
+      acquisition:
+        type: object
+        additionalProperties: true
+      visual_characteristics:
+        type: object
+        additionalProperties: true
+      clinical_constraints:
+        type: object
+        required:
+          - no_patient_identity
+          - no_real_patient_data
+        additionalProperties: true
+      medical_negative_prompt:
+        type: string
+      validation:
+        type: object
+        required:
+          - safety_check
+        additionalProperties: true
+    additionalProperties: true
+additionalProperties: true

@@ -1,0 +1,99 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "https://example.org/create-images/schemas/image_spec.schema.yaml"
+title: "Create_images Core Image Specification"
+type: object
+required:
+  - image_spec
+properties:
+  image_spec:
+    type: object
+    required:
+      - version
+      - intent
+      - output_type
+      - subject
+      - prompt
+      - safety_constraints
+    properties:
+      version:
+        type: string
+      intent:
+        type: string
+      model_family:
+        type: string
+      output_type:
+        type: string
+      subject: {}
+      scene: {}
+      composition: {}
+      camera: {}
+      lighting: {}
+      color_palette: {}
+      materials: {}
+      style: {}
+      mood: {}
+      environment: {}
+      render_quality: {}
+      aspect_ratio:
+        type: string
+      diffusion:
+        type: object
+        properties:
+          steps:
+            type:
+              - integer
+              - "null"
+          cfg_scale:
+            type:
+              - number
+              - "null"
+          sampler:
+            type:
+              - string
+              - "null"
+          seed:
+            type:
+              - integer
+              - "null"
+          denoise_strength:
+            type:
+              - number
+              - "null"
+      prompt:
+        type: object
+        required:
+          - core
+        properties:
+          core:
+            type: string
+          modifiers:
+            type: array
+            items:
+              type: string
+          style_stack:
+            type: array
+            items:
+              type: string
+          quality_stack:
+            type: array
+            items:
+              type: string
+          composition_stack:
+            type: array
+            items:
+              type: string
+          negative:
+            type: string
+      consistency_rules:
+        type: array
+        items:
+          type: string
+      safety_constraints:
+        type: array
+        items:
+          type: string
+      output_requirements:
+        type: object
+        additionalProperties: true
+    additionalProperties: true
+additionalProperties: true
