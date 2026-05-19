@@ -343,6 +343,26 @@ IMAGE_IMAGES.md/
     └── oct.md
 ```
 
+## GitHub Language Detection
+
+The repository includes a `.gitattributes` file so GitHub Linguist recognizes the project as Markdown and YAML instead of leaving specification files out of the language summary.
+
+```gitattributes
+*.md linguist-language=Markdown linguist-detectable=true linguist-documentation=false
+*.markdown linguist-language=Markdown linguist-detectable=true linguist-documentation=false
+*.yaml linguist-language=YAML linguist-detectable=true linguist-documentation=false
+*.yml linguist-language=YAML linguist-detectable=true linguist-documentation=false
+schemas/*.json linguist-language=JSON linguist-detectable=true linguist-documentation=false
+schemas/*.yaml linguist-language=YAML linguist-detectable=true linguist-documentation=false
+schemas/*.yml linguist-language=YAML linguist-detectable=true linguist-documentation=false
+examples/*.yaml linguist-language=YAML linguist-detectable=true linguist-documentation=false
+examples/*.yml linguist-language=YAML linguist-detectable=true linguist-documentation=false
+docs/*.md linguist-language=Markdown linguist-detectable=true linguist-documentation=false
+extensions/*.md linguist-language=Markdown linguist-detectable=true linguist-documentation=false
+```
+
+This improves repository readability on GitHub and makes the language bar reflect that the project is primarily a Markdown specification with YAML schemas and examples.
+
 ## Development Philosophy
 
 This repository is intended to evolve incrementally as an open-source standard.

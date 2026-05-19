@@ -1,6 +1,11 @@
-*.md linguist-language=Markdown
-*.yaml linguist-language=YAML
-*.yml linguist-language=YAML
-schemas/*.json linguist-language=JSON
-schemas/*.yaml linguist-language=YAML
-examples/*.yaml linguist-language=YAML
+*.md linguist-language=Markdown linguist-detectable=true linguist-documentation=false
+*.markdown linguist-language=Markdown linguist-detectable=true linguist-documentation=false
+*.yaml linguist-language=YAML linguist-detectable=true linguist-documentation=false
+*.yml linguist-language=YAML linguist-detectable=true linguist-documentation=false
+schemas/*.json linguist-language=JSON linguist-detectable=true linguist-documentation=false
+schemas/*.yaml linguist-language=YAML linguist-detectable=true linguist-documentation=false
+schemas/*.yml linguist-language=YAML linguist-detectable=true linguist-documentation=false
+examples/*.yaml linguist-language=YAML linguist-detectable=true linguist-documentation=false
+examples/*.yml linguist-language=YAML linguist-detectable=true linguist-documentation=false
+docs/*.md linguist-language=Markdown linguist-detectable=true linguist-documentation=false
+extensions/*.md linguist-language=Markdown linguist-detectable=true linguist-documentation=false
