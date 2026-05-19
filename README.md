@@ -120,6 +120,114 @@ The prompt system is designed so adapters can generate model-specific prompts wi
 
 Safety constraints take precedence over style and prompt preferences. Extension fields take precedence over generic prose. If an adapter cannot support a field, it should preserve the unsupported field as metadata and report the conversion loss.
 
+## Using The Specification With Image Models
+
+IMAGE_IMAGES.md is meant to be passed to an image-generation workflow as structured source data, not as an unprocessed wall of text. A typical implementation reads a YAML image spec, validates it, converts the structured fields into a model-specific prompt, sends the prompt and supported parameters to the model, and stores the original spec as metadata.
+
+Recommended workflow:
+
+1. Write or load an `image_spec` YAML document.
+2. Validate required fields, safety constraints, and extension rules.
+3. Build a positive prompt from `prompt.core`, `modifiers`, `style_stack`, `quality_stack`, and `composition_stack`.
+4. Build a negative prompt from `prompt.negative` plus any extension-specific negative prompt.
+5. Map supported `diffusion` fields into the target model request.
+6. Preserve unsupported fields as metadata instead of discarding them.
+7. Generate the image.
+8. Validate the output against `consistency_rules`, `safety_constraints`, and modality-specific checks.
+9. Store the generated image with the original YAML spec, model name, seed, adapter version, and validation result.
+
+### Prompt Assembly
+
+For most models, the final prompt can be assembled in this order:
+
+```text
+{prompt.core},
+{prompt.modifiers},
+{prompt.style_stack},
+{prompt.quality_stack},
+{prompt.composition_stack},
+{extension constraints when applicable}
+```
+
+The negative prompt can be assembled as:
+
+```text
+{prompt.negative},
+{medical_extension.medical_negative_prompt when applicable},
+{safety exclusions}
+```
+
+Example assembled prompt:
+
+```text
+studio product image of matte black wireless headphones, three-quarter angle, clean silhouette, softbox reflections, commercial product photography, sharp edges, accurate materials, centered, square crop
+```
+
+Example negative prompt:
+
+```text
+logo, text, warped earcups, extra cables, clutter
+```
+
+### Adapter Mapping
+
+Different image models expose different controls. Implementations should map only the fields the target model supports and keep the rest as metadata.
+
+| IMAGE_IMAGES.md Field | SDXL / Stable Diffusion | Flux | Midjourney | DALL-E / Imagen |
+| --- | --- | --- | --- | --- |
+| `prompt.core` | Positive prompt | Prompt text | Prompt text | Prompt text |
+| `prompt.negative` | Negative prompt | Negative text if supported | Usually omitted or converted to prose | Converted to natural-language exclusions |
+| `diffusion.steps` | Steps | Steps if exposed | Not supported directly | Not supported directly |
+| `diffusion.cfg_scale` | CFG scale | Guidance if exposed | Not supported directly | Not supported directly |
+| `diffusion.sampler` | Sampler/scheduler | Scheduler if exposed | Not supported directly | Not supported directly |
+| `diffusion.seed` | Seed | Seed if exposed | Seed parameter if supported | Usually not supported |
+| `aspect_ratio` | Width/height mapping | Width/height mapping | Aspect parameter | Size/aspect option if exposed |
+| `safety_constraints` | Pre-generation validation | Pre-generation validation | Prompt policy and metadata | Prompt policy and metadata |
+
+### Pseudocode
+
+```python
+spec = load_yaml("examples/synthetic_chest_xray.yaml")
+
+validate_schema(spec)
+validate_safety(spec)
+
+positive_prompt = assemble_positive_prompt(spec)
+negative_prompt = assemble_negative_prompt(spec)
+model_params = map_diffusion_params(spec["image_spec"]["diffusion"], target="sdxl")
+
+image = generate_image(
+    prompt=positive_prompt,
+    negative_prompt=negative_prompt,
+    **model_params,
+)
+
+validation_result = validate_output(image, spec)
+save_with_metadata(image, spec, validation_result)
+```
+
+### Direct Text Models
+
+Some systems do not accept seeds, samplers, CFG scale, or negative prompts. For those systems, convert the structured fields into a single natural-language instruction and keep the original YAML beside the output.
+
+Example:
+
+```text
+Generate a synthetic non-diagnostic PA chest X-ray for radiology education. The image should show an adult thorax with full lungs visible, plausible ribs and clavicles, clear mediastinal silhouette, radiographic grayscale density, adequate penetration, and no text overlays. Do not include patient identifiers, hospital labels, DICOM metadata, accession numbers, fake reports, or any claim that this is a real clinical image.
+```
+
+### Medical Model Usage
+
+When using medical examples, the adapter must enforce `medical_extension` before generation. If `synthetic_only`, `non_diagnostic`, `no_patient_identity`, or `no_real_patient_data` is missing or false, the request should fail validation.
+
+Medical generation should always include:
+
+- Synthetic-only language in the final prompt.
+- Non-diagnostic labeling in metadata or visible documentation.
+- No real patient data.
+- No fake report or fake DICOM metadata.
+- A validation result for anatomy, modality, pathology, artifact realism, and safety.
+
 ## Medical Imaging Extension
 
 Medical imaging is implemented as a governed extension instead of a separate standard. This allows synthetic clinical imagery to use the same prompt, diffusion, validation, and metadata architecture as other image types.
