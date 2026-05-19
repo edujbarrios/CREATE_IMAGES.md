@@ -11,7 +11,7 @@ This project follows semantic versioning.
 - Initial repository scaffold.
 - Apache-2.0 licensing.
 - Contribution and changelog guidance.
-- Canonical `Create_images.md` specification.
+- Canonical `CREATE_IMAGES.md` specification.
 - Core and medical extension schema drafts.
 - Modality extension stubs.
 - Example image specifications.

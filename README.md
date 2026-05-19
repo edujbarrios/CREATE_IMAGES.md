@@ -1,8 +1,8 @@
-# Create_images.md
+# CREATE_IMAGES.md
 
-Create_images is an open specification for structured AI image generation prompts, diffusion parameters, metadata, validation, and modality-specific extensions.
+CREATE_IMAGES.md is an open specification for structured AI image generation prompts, diffusion parameters, metadata, validation, and modality-specific extensions.
 
-The canonical specification is [Create_images.md](Create_images.md).
+The canonical specification is [CREATE_IMAGES.md](CREATE_IMAGES.md).
 
 ## Project Status
 
@@ -10,7 +10,7 @@ This repository is intended to evolve incrementally as an open-source standard. 
 
 ## Repository Layout
 
-- `Create_images.md`: canonical specification
+- `CREATE_IMAGES.md`: canonical specification
 - `schemas/`: machine-readable schemas
 - `examples/`: portable examples
 - `docs/`: implementation and governance notes

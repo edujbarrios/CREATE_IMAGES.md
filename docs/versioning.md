@@ -1,6 +1,6 @@
 # Versioning
 
-Create_images follows semantic versioning.
+CREATE_IMAGES.md follows semantic versioning.
 
 - Major versions may include incompatible schema changes.
 - Minor versions may add optional fields, extensions, and validation warnings.

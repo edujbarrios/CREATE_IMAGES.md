@@ -1,8 +1,8 @@
-# Create_images.md
+# CREATE_IMAGES.md
 
 ## 1. Overview
 
-Create_images is a structured, extensible specification for describing AI-generated images with precision, reproducibility, portability, and validation across diffusion and image-generation systems.
+CREATE_IMAGES.md is a structured, extensible specification for describing AI-generated images with precision, reproducibility, portability, and validation across diffusion and image-generation systems.
 
 The specification defines a common image description format that can be implemented by prompt builders, validators, render orchestration systems, educational tools, research pipelines, and model adapters. It supports general image generation, cinematic imagery, scientific imagery, product rendering, technical rendering, educational visuals, medical imaging, radiography, radiology, and synthetic clinical imagery.
 
@@ -10,7 +10,7 @@ Medical imaging is implemented as a governed extension of the same core schema r
 
 ## 2. Purpose
 
-The purpose of Create_images is to provide:
+The purpose of CREATE_IMAGES.md is to provide:
 
 - A reusable specification format for AI-generated images.
 - A machine-readable schema for structured prompting.
@@ -19,11 +19,11 @@ The purpose of Create_images is to provide:
 - A modality-aware extension mechanism for specialized domains.
 - A responsible framework for synthetic medical and educational imagery.
 
-Create_images is not a model, inference engine, clinical tool, DICOM implementation, or diagnostic system. It is a specification for describing intended generated images and the constraints under which those images should be produced.
+CREATE_IMAGES.md is not a model, inference engine, clinical tool, DICOM implementation, or diagnostic system. It is a specification for describing intended generated images and the constraints under which those images should be produced.
 
 ## 3. Design Philosophy
 
-Create_images follows protocol-oriented design principles:
+CREATE_IMAGES.md follows protocol-oriented design principles:
 
 - Stable core schema: the base fields should remain predictable across releases.
 - Extension modularity: domain-specific requirements belong in versioned extensions.
@@ -44,7 +44,7 @@ Create_images follows protocol-oriented design principles:
 | Prompt Stack | Ordered prompt components combined according to precedence rules. |
 | Validation Rule | A machine- or human-checkable condition for acceptability. |
 | Modality | A domain-specific image class, such as X-ray, MRI, CT, product render, or cinematic still. |
-| Adapter | Software that maps Create_images fields to a target model API or prompt format. |
+| Adapter | Software that maps CREATE_IMAGES.md fields to a target model API or prompt format. |
 
 ## 5. General Image Schema
 
@@ -90,7 +90,7 @@ image_spec:
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `image_spec.version` | string | Yes | Semantic version of the Create_images schema used by the document. |
+| `image_spec.version` | string | Yes | Semantic version of the CREATE_IMAGES.md schema used by the document. |
 | `image_spec.intent` | string | Yes | Purpose of the image, such as `cinematic`, `product_render`, `education`, `technical`, `medical_synthetic`, or `scientific`. |
 | `image_spec.model_family` | string | No | Target or preferred generation family, such as `sdxl`, `flux`, `midjourney`, `dalle`, `imagen`, or `model_agnostic`. |
 | `image_spec.output_type` | string | Yes | Expected output class, such as `image`, `render`, `diagram`, `radiograph`, `slide`, or `illustration`. |
@@ -214,7 +214,7 @@ Medical generation maps core fields as follows:
 
 ## 7. Prompt Architecture
 
-Create_images separates prompt construction into ordered components.
+CREATE_IMAGES.md separates prompt construction into ordered components.
 
 | Component | Purpose |
 | --- | --- |
@@ -343,7 +343,7 @@ Implementations should reject requests that attempt to fabricate patient identit
 
 ## 11. Multi-Model Compatibility
 
-Create_images is model-agnostic but adapter-aware.
+CREATE_IMAGES.md is model-agnostic but adapter-aware.
 
 | Model Family | Adapter Guidance |
 | --- | --- |
@@ -873,9 +873,9 @@ Safety considerations: no patient label, no case number, no diagnostic annotatio
 Recommended repository structure:
 
 ```text
-Create_images/
+CREATE_IMAGES.md/
 ├── README.md
-├── Create_images.md
+├── CREATE_IMAGES.md
 ├── LICENSE
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
