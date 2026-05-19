@@ -1,6 +1,6 @@
 $schema: "https://json-schema.org/draft/2020-12/schema"
 $id: "https://example.org/create-images/schemas/medical_extension.schema.yaml"
-title: "CREATE_IMAGES.md Medical Imaging Extension"
+title: "IMAGE_IMAGES.md Medical Imaging Extension"
 type: object
 required:
   - medical_extension
