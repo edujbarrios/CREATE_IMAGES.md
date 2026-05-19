@@ -1,0 +1,102 @@
+image_spec:
+  version: "0.1.0"
+  intent: medical_synthetic
+  model_family: sdxl
+  output_type: radiograph
+  subject: "synthetic adult chest radiograph"
+  scene: "posterior-anterior chest X-ray view"
+  composition: "upright PA chest framing, full lungs visible"
+  camera: null
+  lighting: null
+  color_palette:
+    - grayscale
+  materials:
+    - air
+    - soft tissue
+    - bone
+  style:
+    - radiographic realism
+  mood: null
+  environment: "synthetic radiology education image"
+  render_quality: "plausible grayscale density and anatomical contrast"
+  aspect_ratio: "4:5"
+  diffusion:
+    steps: 36
+    cfg_scale: 5.5
+    sampler: "DPM++ 2M Karras"
+    seed: 88211
+    denoise_strength: null
+  prompt:
+    core: "synthetic non-diagnostic PA chest X-ray, adult thorax, full lungs visible"
+    modifiers:
+      - radiographic grayscale
+      - plausible ribs and clavicles
+      - clear mediastinal silhouette
+    style_stack:
+      - radiology education
+    quality_stack:
+      - anatomically plausible
+      - realistic radiographic contrast
+    composition_stack:
+      - upright PA view
+      - centered thorax
+    negative: "real patient data, hospital labels, DICOM metadata, fake report, text overlays, impossible anatomy"
+  consistency_rules:
+    - "lung fields, ribs, clavicles, heart silhouette, and diaphragm must be spatially plausible"
+  safety_constraints:
+    - synthetic only
+    - non-diagnostic
+    - no real patient data
+  output_requirements:
+    label: "Synthetic image. Non-diagnostic. Not derived from real patient data."
+medical_extension:
+  enabled: true
+  synthetic_only: true
+  non_diagnostic: true
+  modality: xray
+  body_region: chest
+  anatomy:
+    - lungs
+    - ribs
+    - clavicles
+    - heart silhouette
+    - diaphragm
+  anatomical_plane: null
+  projection_or_view: PA
+  laterality: bilateral
+  pathology:
+    name: null
+    presence: absent
+    severity: null
+    distribution: null
+    diagnostic_features: []
+  acquisition:
+    protocol: "upright chest radiograph"
+    contrast: "native radiographic contrast"
+    slice_thickness: null
+    reconstruction_kernel: null
+    field_strength: null
+    kvp: "typical chest radiography range"
+    exposure: "adequate penetration"
+    probe_type: null
+    magnification: null
+  visual_characteristics:
+    density_pattern: "air dark, bone bright, soft tissue intermediate"
+    signal_intensity: null
+    echogenicity: null
+    staining_pattern: null
+    noise_profile: "mild detector noise"
+    artifact_profile: "minimal motion"
+  clinical_constraints:
+    anatomical_consistency: required
+    pathology_consistency: required
+    acquisition_plausibility: required
+    no_patient_identity: required
+    no_real_patient_data: required
+  medical_negative_prompt: "patient identifiers, accession number, institution name, report text, fake DICOM"
+  validation:
+    anatomy_check: required
+    modality_check: required
+    pathology_check: required
+    artifact_check: required
+    safety_check: required

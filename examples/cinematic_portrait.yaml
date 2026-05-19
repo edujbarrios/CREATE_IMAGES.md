@@ -1,0 +1,54 @@
+image_spec:
+  version: "0.1.0"
+  intent: cinematic
+  model_family: sdxl
+  output_type: image
+  subject: "middle-aged engineer in a workshop"
+  scene: "industrial workbench with precision tools"
+  composition: "medium close-up, subject centered, shallow depth of field"
+  camera:
+    lens: "50mm"
+    aperture: "f/2.8"
+  lighting: "soft key light from left, subtle rim light"
+  color_palette:
+    - steel gray
+    - warm amber
+    - muted teal
+  materials:
+    - steel
+    - glass
+    - cotton fabric
+  style:
+    - cinematic realism
+  mood: "focused and calm"
+  environment: "clean fabrication studio"
+  render_quality: "high detail, natural contrast"
+  aspect_ratio: "16:9"
+  diffusion:
+    steps: 32
+    cfg_scale: 6.5
+    sampler: "DPM++ 2M Karras"
+    seed: 14021
+    denoise_strength: null
+  prompt:
+    core: "cinematic portrait of a middle-aged engineer in a clean fabrication studio"
+    modifiers:
+      - precision tools
+      - realistic skin
+      - workshop atmosphere
+    style_stack:
+      - cinematic realism
+    quality_stack:
+      - high detail
+      - natural contrast
+    composition_stack:
+      - medium close-up
+      - 50mm lens
+      - shallow depth of field
+    negative: "cartoon, plastic skin, distorted hands, unreadable tools"
+  consistency_rules:
+    - "hands and tools must be anatomically and mechanically plausible"
+  safety_constraints:
+    - "no real person identity"
+  output_requirements:
+    label: "Synthetic image"
