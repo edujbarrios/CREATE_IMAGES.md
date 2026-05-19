@@ -84,6 +84,137 @@ image_spec:
     label: "Synthetic image"
 ```
 
+## Complete CREATE_IMAGES.md Agent File
+
+When using the specification with an image-generation agent, the YAML should usually be wrapped in a Markdown instruction file. This gives the agent both the structured data and the operational rules for how to interpret it.
+
+The Markdown file can be named `CREATE_IMAGES.md`, `IMAGE_IMAGES.md`, or another project-specific name. The important part is that it contains:
+
+- A clear generation task.
+- A complete `image_spec` YAML block.
+- Prompt assembly instructions.
+- Negative prompt instructions.
+- Model parameter mapping rules.
+- Output and validation requirements.
+
+Example `CREATE_IMAGES.md` file:
+
+````markdown
+# CREATE_IMAGES.md
+
+## Task
+
+Generate one synthetic product-render image from the structured image specification below.
+
+The image-generation agent must:
+
+- Treat the YAML block as the source of truth.
+- Build the final prompt from the `prompt` section.
+- Use `diffusion` parameters only when the target model supports them.
+- Preserve unsupported fields as metadata.
+- Follow all `consistency_rules` and `safety_constraints`.
+- Return the generated image plus the final prompt, negative prompt, model parameters used, and validation notes.
+
+## Image Specification
+
+```yaml
+image_spec:
+  version: "0.1.0"
+  intent: product_render
+  model_family: flux
+  output_type: image
+  subject: "matte black wireless headphones"
+  scene: "minimal studio tabletop"
+  composition: "three-quarter product angle, centered"
+  lighting: "large softbox reflection with controlled highlight edges"
+  color_palette:
+    - matte black
+    - cool gray
+    - white
+  materials:
+    - soft-touch plastic
+    - brushed aluminum
+    - mesh fabric
+  render_quality: "sharp edges, clean reflections, realistic materials"
+  aspect_ratio: "1:1"
+  diffusion:
+    steps: 28
+    cfg_scale: null
+    sampler: null
+    seed: 3007
+    denoise_strength: null
+  prompt:
+    core: "studio product image of matte black wireless headphones"
+    modifiers:
+      - three-quarter angle
+      - clean silhouette
+      - softbox reflections
+    style_stack:
+      - commercial product photography
+    quality_stack:
+      - sharp edges
+      - accurate materials
+    composition_stack:
+      - centered
+      - square crop
+    negative: "logo, text, warped earcups, extra cables, clutter"
+  consistency_rules:
+    - "left and right earcups must be symmetrical"
+  safety_constraints:
+    - "no trademarked logo"
+  output_requirements:
+    label: "Synthetic image"
+```
+
+## Prompt Assembly
+
+Assemble the final positive prompt in this order:
+
+1. `prompt.core`
+2. `prompt.modifiers`
+3. `prompt.style_stack`
+4. `prompt.quality_stack`
+5. `prompt.composition_stack`
+
+Final positive prompt:
+
+```text
+studio product image of matte black wireless headphones, three-quarter angle, clean silhouette, softbox reflections, commercial product photography, sharp edges, accurate materials, centered, square crop
+```
+
+Final negative prompt:
+
+```text
+logo, text, warped earcups, extra cables, clutter
+```
+
+## Model Parameters
+
+Use these parameters when the selected model supports them:
+
+```yaml
+model_parameters:
+  aspect_ratio: "1:1"
+  steps: 28
+  seed: 3007
+```
+
+The target model is `flux`. If the implementation does not expose `steps`, `seed`, or other diffusion controls, keep those fields in output metadata and continue generation with the supported controls.
+
+## Expected Output
+
+The output should be a square synthetic product-render image showing matte black wireless headphones on a minimal studio tabletop. The headphones should appear symmetrical, realistic, sharply rendered, and free of logos or text.
+
+## Validation Checklist
+
+- Product is recognizable as wireless headphones.
+- Left and right earcups are symmetrical.
+- Materials look like soft-touch plastic, brushed aluminum, and mesh fabric.
+- Lighting produces controlled softbox reflections.
+- No logo, text, clutter, extra cables, or warped geometry is present.
+- Output is labeled as synthetic.
+````
+
 ## How The Specification Works
 
 An IMAGE_IMAGES.md document separates image generation into structured layers.
